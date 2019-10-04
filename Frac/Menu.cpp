@@ -230,6 +230,7 @@ void Menu::operations(std::string exp) {
 					}
 					else {
 						result = fractionOne++;
+						resForIncrement = fractionOne;
 					}
 				}
 				else if (operationSign[1] == '=') {
@@ -247,6 +248,7 @@ void Menu::operations(std::string exp) {
 					}
 					else {
 						result = fractionOne--;
+						resForIncrement = fractionOne;
 					}
 				}
 				else if (operationSign[1] == '=') {
@@ -390,7 +392,7 @@ void Menu::operations(std::string exp) {
 		}
 
 		if ((operationSign[0] != '<') && (operationSign[0] != '>')) {
-			PrintFraction(result, exp);
+			PrintFraction(result, exp, unary, pre, resForIncrement);
 		}
 		else {
 			fout.open("OUTPUT.txt", std::ofstream::app);
@@ -404,10 +406,11 @@ void Menu::operations(std::string exp) {
 }
 
 
-void PrintFraction(Fraction &result, std::string exp) {
+void PrintFraction(Fraction &result, std::string exp, bool unary, bool pre, Fraction &resForIncrement) {
 
 	std::string strResult;
 	std::string sign;
+	std::string signForInc;
 
 	fout.open("OUTPUT.txt", std::ofstream::app);
 
@@ -417,12 +420,27 @@ void PrintFraction(Fraction &result, std::string exp) {
 	else {
 		sign = "-";
 	}
-
-	if (result.numerator == 0) {
-		strResult = " = " + sign + std::to_string(result.intNumber);
+	if (unary == true && pre == false) {
+		if (resForIncrement.sign == 1) {
+			signForInc = "+";
+		}
+		else {
+			signForInc = "-";
+		}
+		if (resForIncrement.numerator == 0) {
+			strResult = " = " + sign + std::to_string(result.intNumber) + "; Fraction = " + signForInc + std::to_string(resForIncrement.intNumber);
+		}
+		else {
+			strResult = " = " + sign + std::to_string(result.intNumber) + ' ' + std::to_string(result.numerator) + '/' + std::to_string(result.denominator) + "; Fraction = " + signForInc + std::to_string(resForIncrement.intNumber) + ' ' + std::to_string(resForIncrement.numerator) + '/' + std::to_string(resForIncrement.denominator);
+		}
 	}
 	else {
-		strResult = " = " + sign + std::to_string(result.intNumber) + ' ' + std::to_string(result.numerator) + '/' + std::to_string(result.denominator);
+		if (result.numerator == 0) {
+			strResult = " = " + sign + std::to_string(result.intNumber);
+		}
+		else {
+			strResult = " = " + sign + std::to_string(result.intNumber) + ' ' + std::to_string(result.numerator) + '/' + std::to_string(result.denominator);
+		}
 	}
 
 	fout << exp << strResult << std::endl;

@@ -7,6 +7,7 @@
 
 class Menu {
 
+	Fraction resForIncrement;
 	std::string strExp;
 	int strCounter;
 	Fraction result;
@@ -33,5 +34,5 @@ public:
 	void GetExpression();
 	void ExpressionAnalysis(std::string exp, int strCounter);
 	void operations(std::string exp);
-	friend void PrintFraction(Fraction &result, std::string exp);
+	friend void PrintFraction(Fraction &result, std::string exp, bool unary, bool pre, Fraction &resForIncrement);
 };

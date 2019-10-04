@@ -66,7 +66,7 @@ public:
 
 	double ToDouble();
 
-	friend void PrintFraction(Fraction &result, std::string exp);
+	friend void PrintFraction(Fraction &result, std::string exp, bool unary, bool pre, Fraction &resForIncrement);
 
 
 
